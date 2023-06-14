@@ -1,0 +1,57 @@
+<!-- sldsValidatorIgnore -->
+<!-- sldsValidatorIgnore -->
+<template>
+    <h2 class="slds-align_absolute-center">If no criteria is selected, 200 random records will be shown ordered by Account Name</h2>
+    <lightning-layout class="slds-var-m-around_medium slds-box" multiple-rows="true">
+        <lightning-layout-item size="6" padding="around-medium">
+            <lightning-input name="nameval" type="text" placeholder="Search by Account Name" value={nameval} onkeyup={handleKeyup}></lightning-input>
+            <lightning-combobox name="stateval" label="Billing State" value={stateval} options={billingStateValues} onchange={handleChange}></lightning-combobox>
+            <lightning-combobox name="ratingval" label="Rating" value={ratingval} options={ratingPicklistValues} onchange={handleChange}></lightning-combobox>
+        </lightning-layout-item>
+
+        <lightning-layout-item size="6" padding="around-medium">
+            <lightning-input name="phoneval" type="text" placeholder="Search by Phone Number" value={phoneval} onkeyup={handleKeyup}></lightning-input>
+            <lightning-combobox name="cityval" label="Billing City" value={cityval} options={billingCityValues} onchange={handleChange}></lightning-combobox>
+            <lightning-combobox name="industryval" label="Industry" value={industryval} options={industryPicklistValues} onchange={handleChange}></lightning-combobox>
+        </lightning-layout-item>
+
+        <lightning-layout-item padding="around-medium" size="12">
+            <div class="slds-align_absolute-center">
+            <lightning-button label="Search" variant="brand" onclick={handleSearch} class="slds-var-p-around_large"></lightning-button>
+            <lightning-button label="Reset" variant="brand" onclick={handleReset} class="slds-var-p-around_large"></lightning-button>
+            </div>
+        </lightning-layout-item>
+    </lightning-layout>
+
+    <template if:true={showAccounts}>
+        <template if:true={norecord}>
+        <h1 class="slds-text-align_center slds-text-heading_medium slds-text-color_error">No records found for the entered criteria</h1>
+        </template>
+        <lightning-layout class="slds-var-m-around_medium slds-box">
+            <lightning-layout-item size="12" padding="around-medium">
+                 <lightning-datatable
+                    key-field="Id"
+                    columns={columns}
+                    data={items}
+                    show-row-number-column
+                    hide-checkbox-column>
+                </lightning-datatable>
+            </lightning-layout-item>
+    </lightning-layout>
+    
+    <template if:false={norecord}>
+    <lightning-layout horizontal-align="space">
+        <lightning-layout-item flexibility="auto">
+            <lightning-button label="Previous" icon-name="utility:chevronleft" onclick={previousHandler}></lightning-button>
+        </lightning-layout-item>
+        <lightning-layout-item flexibility="auto">
+            Page {page} of {totalPage}
+        </lightning-layout-item>
+        <lightning-layout-item flexibility="auto">
+            <lightning-button label="Next" icon-name="utility:chevronright" icon-position="right" onclick={nextHandler}>
+            </lightning-button>
+        </lightning-layout-item>
+    </lightning-layout>
+    </template>
+    </template>
+</template>
